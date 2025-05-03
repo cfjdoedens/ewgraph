@@ -24,7 +24,7 @@ The grid is formed as a tibble. Each segment is a row of the tibble.
 
 The package design is not based on information hiding: the idea is
 that users can know the details of how the chance graph is represented. And
-possibly use this knowledge in unforeseen ways.
+possibly use this knowledge in unforeseen ways.  
 
 ## Installation
 

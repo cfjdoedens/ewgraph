@@ -22,7 +22,7 @@ You can install the development version of ewgraph like so:
 
 ``` r
 install.packages("devtools")
-#> Installing package into '/tmp/Rtmp326o4a/temp_libpath2fbc79540299'
+#> Installing package into '/tmp/Rtmp326o4a/temp_libpath2fbc1ed0200f'
 #> (as 'lib' is unspecified)
 # devtools::install_github("cfjdoedens/ewgraph")
 library(ewgraph)
