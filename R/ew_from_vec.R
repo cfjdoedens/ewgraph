@@ -1,12 +1,17 @@
-# Create an equal width probability graph from vector v,
-# whereby we assume that the elements of the vector
-# represent the probabilities 1/S - 1/2S, ..., S/S - 1/2S.
-# S is the number of elements, so the length, of the vector.
-# We call the corresponding elements of the equal width probability
-# graph _segments_ of the probability graph.
-#
-# For a description of equal width probability graphs see ew_minmaxcumh_p.R.
-#
+#' Create an equal width probability graph from vector v
+#'
+#' We assume that the elements of the vector
+#' represent the probabilities p, of 1/S - 1/2S, ..., S/S - 1/2S.
+#' S is the number of elements, so the length, of the vector.
+#' We call the corresponding elements of the equal width probability
+#' graph _segments_ of the probability graph.
+#'
+#' For a description of equal width probability graphs see ew_minmaxcumh_p.R.
+#'
+#' @param v The input vector.
+#' @returns An equal width chance graph representation of the given vector.
+#' @export
+#' @importFrom dplyr tibble
 ew_from_vec <-
   function(v) {
     S <- length(v)

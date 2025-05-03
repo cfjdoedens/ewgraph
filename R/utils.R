@@ -1,41 +1,3 @@
-#' One argument constant function that returns 1
-#'
-#' The domain of this function is the numeric values. Other input
-#' values will result in an error.
-#'
-#' @param x Should be numeric.
-#'
-#' @returns 1 for x being numeric, otherwise an error.
-#' @export
-#'
-#' @examples
-#'   # Returns 1.
-#'   unity(-0.034)
-#'
-#'   # Returns 1.
-#'   unity(rnorm(1, mean = 10^10, sd = 10^20))
-#'
-#'   # Returns 1.
-#'   unity(NaN)
-#'
-#'   # Returns 1.
-#'   unity(Inf)
-#'
-#'   # Returns c(1, 1).
-#'   unity(c(3, 7))
-#'
-#'   # An error is generated for non-numeric input.
-#'   tryCatch({
-#'     unity("a")
-#'   }, error = function(e) {
-#'     cat('unity("a") procuded the following error message:', conditionMessage(e), "\n")
-#'     NA
-#'   })
-unity <- function(x) {
-  stopifnot(is.numeric(x))
-  rep.int(1, length(x))
-}
-
 #' Partition \[0,1\] into S equally sized consecutive segments
 #'
 #' Each segment is represented by its midpoint.
@@ -50,53 +12,132 @@ unity <- function(x) {
 partition_0_1 <- function(S = 1000) {
   seq(0 + 1 / (2 * S), 1 - 1 / (2 * S), 1 / S)
 }
-nonnegint <- function(i) {
-  if (!all(is.numeric(i))) {
-    return(FALSE)
-  }
-  if (!all(i >= 0)) {
-    return(FALSE)
-  }
-  if (!all((round(i) == i))) {
-    return(FALSE)
-  }
 
-  TRUE
-}
-
-posint <- function(i) {
-  nonnegint(i) && all(i > 0)
-}
-
-# Get the number of segments, i.e. number of rows, of an equal width graph.
+#' Get the number of segments, i.e. number of rows, of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The number of segments, this is, rows of g
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_S(g)
 ew_S <- function(g) {
   length(ew_get_h(g))
 }
 
+#' Get the p column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The p column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_p(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_p <- function(g) {
   g %>% pull("p")
 }
 
+#' Get the h column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The h column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_h(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_h <- function(g) {
   g %>% pull("h")
 }
 
+#' Get the h_left column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The h_left column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_h_left(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_h_left <- function(g) {
   g %>% pull("h_left")
 }
 
+#' Get the h_right column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The h_right column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_h_right(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_h_right <- function(g) {
   g %>% pull("h_right")
 }
 
+#' Get the surface column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The surface column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_surface(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_surface <- function(g) {
   g %>% pull("surface")
 }
 
+#' Get the cumulative surface column of an equal width graph.
+#'
+#' @param g The equal width graph
+#'
+#' @returns The cumulative surface column as a vector
+#' @export
+#'
+#' @examples
+#'   g <- ew_from_vec(c(1, 2, 3))
+#'   ew_get_cumsurface(g)
+#' @importFrom dplyr pull
+#' @importFrom dplyr %>%
 ew_get_cumsurface <- function(g) {
   g %>% pull("cumsurface")
 }
 
+#' Check whether object is a valid equal width graph
+#'
+#' @param g The object to be checked
+#' @param verbose TRUE or FALSE
+#'
+#' @returns TRUE or FALSE
+#'   When g is invalid as an equal width graph
+#'   and verbose == TRUE, info why g is invalid
+#'   is printed to the console.
+#' @export
+#'
+#' @examples
+#'   g <- ew_validate(c(1, 2, 3))
+#'   ew_validate(g)
+#' @importFrom tibble is_tibble
 ew_validate <- function(g, verbose = TRUE) {
   # When we have to do with a list of (supposed) ew_probability_graphs,
   # we call ew_validate() recursively.
@@ -186,12 +227,102 @@ ew_validate <- function(g, verbose = TRUE) {
   return(TRUE)
 }
 
+#' One argument constant function that returns 1
+#'
+#' The domain of this function is the numeric values. Other input
+#' values will result in an error.
+#'
+#' @param x Should be numeric.
+#'
+#' @returns 1 for x being numeric, otherwise an error.
+#' @export
+#'
+#' @examples
+#'   # Returns 1.
+#'   unity(-0.034)
+#'
+#'   # Returns 1.
+#'   unity(rnorm(1, mean = 10^10, sd = 10^20))
+#'
+#'   # Returns 1.
+#'   unity(NaN)
+#'
+#'   # Returns 1.
+#'   unity(Inf)
+#'
+#'   # Returns c(1, 1).
+#'   unity(c(3, 7))
+#'
+#'   # An error is generated for non-numeric input.
+#'   tryCatch({
+#'     unity("a")
+#'   }, error = function(e) {
+#'     cat('unity("a") procuded the following error message:', conditionMessage(e), "\n")
+#'     NA
+#'   })
+unity <- function(x) {
+  stopifnot(is.numeric(x))
+  rep.int(1, length(x))
+}
+
+#' Round probability value in accordance with number of segments of equal width graph
+#'
+#' This function needs some more thought.
+#' It now returns a string.
+#' It is probably better if it returns a number.
+#' It needs also better explaining.
+#'
+#' @param p The probability to round
+#' @param S The number of segments of teh equal width graph
+#'
+#' @returns The rounded value
+#' @export
+#'
+#' @examples
+#'   ew_round_prob(0.0356, 10)
 ew_round_prob <- function(p, S) {
   stopifnot(is.numeric(p))
   stopifnot(posint(S))
   signif <- floor(-log10(1 / (2 * S)))
   r <- format(round(p, signif), nsmall = signif)
   r
+}
+
+#' Check whether object is vector of non negative integers
+#'
+#' @param i The object to check.
+#'
+#' @returns TRUE or FALSE
+#' @export
+#'
+#' @examples
+#'   nonnegint(c(0, 1))
+nonnegint <- function(i) {
+  if (!all(is.numeric(i))) {
+    return(FALSE)
+  }
+  if (!all(i >= 0)) {
+    return(FALSE)
+  }
+  if (!all((round(i) == i))) {
+    return(FALSE)
+  }
+
+  TRUE
+}
+
+#' Check whether object is vector of positive integers
+#'
+#' @param i The object to check.
+#'
+#' @returns TRUE or FALSE
+#' @export
+#'
+#' @examples
+#'   posint(c(1, 2))
+
+posint <- function(i) {
+  nonnegint(i) && all(i > 0)
 }
 
 # This supresses the message from devtools::check().

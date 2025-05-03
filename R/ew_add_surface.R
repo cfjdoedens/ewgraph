@@ -13,6 +13,7 @@
 #'
 #' Examples
 #' g <- ew_add_surface(g)
+#' @importFrom dplyr near
 ew_add_surface <- function(g) {
   # Get number of segments, i.e. rows, from g.
   S <- ew_S(g)

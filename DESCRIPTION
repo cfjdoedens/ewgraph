@@ -7,21 +7,14 @@ Description: Chance graphs are represented as tibbles, based on an even spaced
     base line on (0, 1).
 License: MIT + file LICENSE
 Imports: 
-    binompoiscont,
     dplyr,
-    ggplot2,
-    purrr,
-    rlang,
-    stats,
-    testthat,
-    tibble,
-    tidyr,
-    waldo
+    tibble
 Remotes:
     cfjdoedens/binompoiscont
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

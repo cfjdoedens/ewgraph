@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(drawsneeded)
+library(ewgraph)
 
-test_check("drawsneeded")
+test_check("ewgraph")
