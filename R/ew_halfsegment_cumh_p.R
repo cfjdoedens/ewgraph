@@ -1,10 +1,9 @@
 #' In ew half segment, given cumulative value for h, find corresponding p value
 #'
-#' An ew half segment of an equal width graph, or ew_graph,
+#' An ew half segment of an equal width graph, or ewgraph,
 #' is a rectangular trapezium with
 #' baseline size U and two parallel sides perpendicular
 #' to the base line.
-#' For a full description of ew_graphs see ew_add_h_leftright.R.
 #'
 #' @param h1 The height of the left side of the trapezium.
 #' @param h2 The height of the right side of the trapezium.

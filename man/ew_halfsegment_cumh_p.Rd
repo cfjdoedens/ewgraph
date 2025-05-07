@@ -28,9 +28,8 @@ Examples
 x <- ew_halfsegment_cumh_p(h1 = 1, h2 = 0, sd = 0.0125, U = 0.25)
 }
 \description{
-An ew half segment of an equal width graph, or ew_graph,
+An ew half segment of an equal width graph, or ewgraph,
 is a rectangular trapezium with
 baseline size U and two parallel sides perpendicular
 to the base line.
-For a full description of ew_graphs see ew_add_h_leftright.R.
 }

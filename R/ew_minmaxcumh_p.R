@@ -1,22 +1,32 @@
-# ew_maxcumh_p(g, s)
-# g is an equal width probability graph, an ew_graph.
-# So it describes a chance curve.
-# For a description of ew_graphs see ew_add_h_leftright.R.
-#
-# Return the lowest (possibly interpolated) value of p for which the cumulative
-# chance of h, starting from the first element of g and going to
-# the last element of g is >= s
-ew_maxcumh_p <- function(g, s) {
+#' maximum error rate for given certainty
+#'
+#' Returns the lowest (possibly interpolated)
+#' error rate, p, for which the accumulation
+#' of the chance density, h, starting from the first element of g and going to
+#' the last element of `g` is `>= cert`.
+#'
+#' @param g An ewgraph.
+#' @param cert The certainty. Lies between 0 and 1.
+#'
+#' @returns The maximum error rate of `g`, given certainty `cert`.
+#' @export
+#'
+#' @examples
+#'   S <- 1000
+#'   g <- ew_from_vec(dbinom(30, 300, partition_0_1(S)))
+#'   max_cumh_p <- ew_maxcumh_p(g)
+#'   print(max_cumh_p)
+ew_maxcumh_p <- function(g, cert = .95) {
   p <- ew_get_p(g)
   h_left <- ew_get_h_left(g)
   h <- ew_get_h(g)
   h_right <- ew_get_h_right(g)
   cumsurface <- ew_get_cumsurface(g)
   surface <- ew_get_surface(g)
-  S <- ew_S(g) # Number of segments of ew_graph g.
-  U <- 1 / (2 * S) # Length of base line of half segment of ew_graph.
+  S <- ew_S(g) # Number of segments of ewgraph g.
+  U <- 1 / (2 * S) # Length of base line of half segment of ewgraph.
 
-  # We look for the lowest index of a segment of g for which s <= cumsurface.
+  # We look for the lowest index of a segment of g for which cert <= cumsurface.
   # We do that using binary search.
   # We use the loop invariant that the segment we are looking for is in the range:
   # [begin_range, begin_range + width_range - 1].
@@ -47,12 +57,12 @@ ew_maxcumh_p <- function(g, s) {
           cumsurface_im1 <- cumsurface[[i - 1]]
         }
 
-        # Determine sd, the part of chance surface s inside segment i.
+        # Determine sd, the part of chance surface cert inside segment i.
         {
           if (i == 1) {
-            sd <- s
+            sd <- cert
           } else {
-            sd <- s - cumsurface_im1
+            sd <- cert - cumsurface_im1
           }
         }
 
@@ -84,7 +94,7 @@ ew_maxcumh_p <- function(g, s) {
             U = U
           )
           return(pi - U + p_delta) # Remember: pi is in the middle of segment i.
-        } else if (s == cumsurface_im1 + surface_left) {
+        } else if (cert == cumsurface_im1 + surface_left) {
           # So the sought for value of p is pi.
           return(pi)
         } else {
@@ -107,7 +117,7 @@ ew_maxcumh_p <- function(g, s) {
         width_range_2 <- width_range - width_range_1
         stopifnot(1 <= width_range_1)
         stopifnot(1 <= width_range_2)
-        if (s <= cumsurface[[begin_range + width_range_1 - 1]]) {
+        if (cert <= cumsurface[[begin_range + width_range_1 - 1]]) {
           width_range <- width_range_1
         } else {
           width_range <- width_range_2
@@ -119,13 +129,22 @@ ew_maxcumh_p <- function(g, s) {
   stop("ew_maxcumh_p(): fall through; should not come here")
 }
 
-# ew_mincumh_p(g, s)
-# g is an equal width probability graph.
-# So it describes a chance curve.
-# For a description of equal width probability graphs see the top of this file.
-# Return the highest interpolated value of p for which the cumulative
-# chance of h, starting from the last segment of g and going to
-# the first segment of g is <= 1 - s.
-ew_mincumh_p <- function(g, s) {
-  ew_maxcumh_p(g, 1 - s)
+#' minimum error rate for given certainty
+#'
+#' Returns the highest (possibly interpolated) error rate, p, for which the accumulation
+#' of the chance density, h, starting from the last element of `g` and going to
+#' the first element of `g` is `>= cert`.
+#' @param g An ewgraph.
+#' @param cert The certainty. Lies between 0 and 1.
+#'
+#' @returns The minimum error rate of `g`, given certainty `cert`.
+#' @export
+#'
+#' @examples
+#'   S <- 1000
+#'   g <- ew_from_vec(dbinom(30, 300, partition_0_1(S)))
+#'   min_cumh_p <- ew_mincumh_p(g)
+#'   print(min_cumh_p)
+ew_mincumh_p <- function(g, cert = .95) {
+  ew_maxcumh_p(g, 1 - cert)
 }

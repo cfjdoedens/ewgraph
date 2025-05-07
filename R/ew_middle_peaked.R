@@ -1,11 +1,17 @@
-# g is an equal width probability graph.
-# So it describes a chance curve.
-# Return TRUE iff the highest value of h is reached
-# neither for the h_left of the first segment
-# nor for the h_right of the last segment
-#
-# For a description of equal width probability graphs see ew_minmaxcumh_p.R.
-#
+#' Return TRUE iff the highest value of h is reached
+#' neither for the h_left of the first segment
+#' nor for the h_right of the last segment
+#'
+#' @param g An ewgraph.
+#'
+#' @returns TRUE or FALSE.
+#' @export
+#'
+#' @examples
+#'   S <- 1000
+#'   g <- ew_from_vec(dbinom(30, 300, partition_0_1(S)))
+#'   middle_peaked <- ew_middle_peaked(g)
+#'   print(middle_peaked)
 ew_middle_peaked <- function(g) {
   # Get h_left.
   h_left <- ew_get_h_left(g)

@@ -1,12 +1,17 @@
-# ew_maxh(g)
-# g is an equal width probability graph.
-# So it describes a chance curve.
-# Return the (possibly interpolated) value of h and p for which h, h_left, or h_right
-# is highest of all h, h_left and h_right.
-# Return as a named list of the form c(h = h_highest, p = p_highest).
-#
-# For a description of equal width probability graphs see ew_minmaxcumh_p.R.
-#
+#' Return the (possibly interpolated) highest value of h, h_left, or h_right
+#' and corresponding error rate, p.
+#'
+#' Return as a named list of the form c(h = h_highest, p = p_highest).
+#'
+#' @param g An ewgraph.
+#' @returns c(h = h_highest, p = p_highest)
+#' @export
+#'
+#' @examples
+#'   S <- 1000
+#'   g <- ew_from_vec(dbinom(30, 300, partition_0_1(S)))
+#'   hp_max <- ew_maxh(g)
+#'   print(hp_max)
 ew_maxh <- function(g) {
   h <- ew_get_h(g)
   h_left <- ew_get_h_left(g)

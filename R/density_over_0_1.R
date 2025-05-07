@@ -9,8 +9,8 @@
 #' @param values_from_0_1 Is a vector of values from \code{[0, 1]}
 #' @param S The number of buckets in which we separate
 #'     the elements of the input vector.
-#' @returns A vector of size S. Each element i of the vector contains
-#'          the count of the values from values_from_01 that have a value in the
+#' @returns A vector of size `S`. Each element i of the vector contains
+#'          the count of the values from `values_from_01` that have a value in the
 #'          range (1/S - 1/2S, 1/S + 1/2S].
 #' examples
 #'     y <- seq(0, 1, length.out=33)
