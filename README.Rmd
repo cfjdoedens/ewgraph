@@ -82,7 +82,8 @@ $p_i$ are elements of P, so of [0, 1].
 $h_i$ are elements of H, so of [0, inf].
 $$h_i = c(p_i)$$
 
-Let $$U = 1/(2*S)$$
+Let 
+$$U = 1/(2*S)$$
 We define the ith segment of $P$ as $[i/S - 1/S, i/S]$.
 So all segments have equal width, $1/S = 2*U$.
 And there are $S$ segments.
@@ -143,13 +144,13 @@ of its left and right parts.
 
  $$surface_i = surface\_left_i + surface\_right_i$$
  $$surface\_left_i  = length\_of\_left\_halve\_of\_segment_i *
-                   (hleft_i + h_i)/2$$
-                 $$= U*(hleft_i + h_i)/2$$
+                   (hleft_i + h_i) / 2$$
+                 $$= U*(hleft_i + h_i) / 2$$
  $$surface\_right_i = length\_of\_right\_halve\_of\_segment_i *
-                  (h_i + hright_i)/2$$
-                 $$= U*(h_i + hright_i)/2$$
- $$surface_i = U*(hleft_i + h_i)/2 + U*(h_i + hright_i)/2$$
-                 $$= (hleft_i + hright_i + 2*h_i) * U /2$$
+                  (h_i + hright_i) / 2$$
+                 $$= U*(h_i + hright_i) / 2$$
+ $$surface_i = U*(hleft_i + h_i) / 2 + U*(h_i + hright_i) / 2$$
+                 $$= (hleft_i + hright_i + 2 * h_i) * U / 2$$
 
  We compute $hleft_i$ and $hright_i$ by interpolation.
 
@@ -158,7 +159,7 @@ of its left and right parts.
  $$h_{im1} = c(p_{im1})$$ 
  where $im1$ stands for $i - 1$.
  We then interpolate:
- $$hleft_i  = (h_i + h_{im1})/2$$
+ $$hleft_i  = (h_i + h_{im1}) / 2$$
 ```{r interpolation of hlefti}
 #                                                  |hi
 #                                  |hlefti         |
@@ -170,7 +171,7 @@ of its left and right parts.
 ```
 
   In the same vein we get
-  $$hright_i = (h_i + h_{ip1})/2$$
+  $$hright_i = (h_i + h_{ip1}) / 2$$
 ```{r interpolation of hrighti}
 #                  |hi
 #                  |               |hrighti
@@ -198,24 +199,24 @@ of its left and right parts.
 #   segment 1                     segment 2
 ```
 
-  The line through the coordinates $(U, h_1)$ and $(3*U, h_2)$
+  The line through the coordinates $(U, h_1)$ and $(3 * U, h_2)$
   has the algebraic form $y = ax+b$.
   So
-    $$h_1 = a*U + b$$
-    $$h_2 = a*3*U + b$$
+    $$h_1 = a * U + b$$
+    $$h_2 = a * 3 * U + b$$
   Then we get
-    $$a = (h_2 - h_1)/(2*U)$$
-    $$b = (3*h_1 - h_2)/2$$
+    $$a = (h_2 - h_1) / (2 * U)$$
+    $$b = (3 * h_1 - h_2) / 2$$
   So for $hleft_1$ we get
-    $$hleft_1 = a*0 + b$$
+    $$hleft_1 = a * 0 + b$$
            $$= b$$
-           $$= (3*h_1 - h_2)/2$$
+           $$= (3 * h_1 - h_2) / 2$$
   However, note that $hleft_1$ could become less than 0.
   This we should forbid, as it would imply a negative probability
   density.
 
   So, taking this into account we get:
-    $$hleft_1 = max(0, (3*h_1 - h_2)/2)$$
+    $$hleft_1 = max(0, (3 * h_1 - h_2) / 2)$$
 
   For $hright_S$:
 ```{r extrapolation of hrightS}
@@ -227,26 +228,26 @@ of its left and right parts.
 #                 pSm1            pS - U          pS             1
 #    segment S-1                  segment S
 ```
-  The line through the coordinates $(1 - 3*U, h_{Sm1})$ and $(1 - U, h_S)$
+  The line through the coordinates $(1 - 3 * U, h_{Sm1})$ and $(1 - U, h_S)$
   has the algebraic form $$y = ax+b$$
   So
-    $$h_{Sm1} = a*(1-3*U) + b$$
-    $$h_S   = a*(1-U) + b$$
+    $$h_{Sm1} = a * (1 - 3 * U) + b$$
+    $$h_S   = a * (1 - U) + b$$
   Then we get
-    $$a = (h_S - h_{Sm1})/(2*U)$$
-    $$b = h_S + (h_{Sm1}-h_S)*(1-U)/(2*U)$$
+    $$a = (h_S - h_{Sm1}) / (2 * U)$$
+    $$b = h_S + (h_{Sm1} - h_S) * (1 - U) / (2 * U)$$
 
   So for $hright_S$ we get
-    $$hright_S = a*1 + b$$
+    $$hright_S = a * 1 + b$$
             $$= a + b$$
-            $$= (h_S - h_{Sm1})/(2*U) + h_S + (h_{Sm1}-h_S)*(1-U)/(2*U)$$
-            $$= (3*h_S - h_{Sm1})/2$$
+            $$= (h_S - h_{Sm1}) / (2 * U) + h_S + (h_{Sm1} - h_S) * (1 - U) / (2 * U)$$
+            $$= (3 * h_S - h_{Sm1}) / 2$$
     This outcome is symmetric with
-     $$hleft_1 = (3*h_1 - h_2)/2$$
+     $$hleft_1 = (3 * h_1 - h_2)/ 2$$
 
   As with $hleft_1$ we should forbid negative values for $hright_S$.
   So, taking this into account we get:
-    $$hright_S = max(0, (3*h_S - h_{Sm1})/2)$$
+    $$hright_S = max(0, (3 * h_S - h_{Sm1}) / 2)$$
 
 
 ### Representation of a segment from an ewgraph as a geometric figure
