@@ -166,7 +166,7 @@ In the same vein we get $$hright_i = (h_i + h_{ip1}) / 2$$
 ```
 
 This leaves us with the problem how to interpolate the leftmost
-$hleft_i$, and the rightmost $hright_i$, i.e. $hleft_1$ and $hright_S$.
+$hleft_i$, so $hleft_1$, and the rightmost $hright_i$, so $hright_S$.
 This because, we can not interpolate with hi from segment 0 or from
 segment $S+1$, as these segments do not exist. For those cases instead
 of interpolating we extrapolate.
