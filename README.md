@@ -22,7 +22,7 @@ You can install the development version of ewgraph like so:
 
 ``` r
 if (file.exists("/home/crist-jan/R/x86_64-pc-linux-gnu-library/4.5/ewgraph")) {
-  # We are executing on the author machine, use the development version available there.
+  # We are executing on the author machine, use the development version available there. 
   loadNamespace("ewgraph")
 } else {
   # Use the github version.
