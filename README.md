@@ -21,11 +21,17 @@ possibly use this knowledge in unforeseen ways.
 You can install the development version of ewgraph like so:
 
 ``` r
-install.packages("devtools")
-#> Installing package into '/tmp/RtmpZGIiO3/temp_libpathad523ed31e2'
-#> (as 'lib' is unspecified)
-# devtools::install_github("cfjdoedens/ewgraph")
-# install.packages("/home/crist-jan/R/x86_64-pc-linux-gnu-library/4.5/ewgraph", repos = NULL, type = "source")
+if (file.exists("/home/crist-jan/R/x86_64-pc-linux-gnu-library/4.5/ewgraph")) {
+  # We are executing on the author machine, use the development version available there.
+  loadNamespace("ewgraph")
+} else {
+  # Use the github version.
+  if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
+  }
+  pak::pak("cfjdoedens/ewgraph")
+}
+#> <environment: namespace:ewgraph>
 ```
 
 ## Example

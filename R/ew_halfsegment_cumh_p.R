@@ -14,13 +14,14 @@
 #'           sd > 0, and smaller than the surface of the
 #'           trapezium.
 #' @param U  The length of the baseline of the trapezium.
+#' @export
 #'
 #' @returns
 #' The computed value of x, which is the point where the imaginary line
 #' crosses the base line.
 #'
-#' Examples
-#' x <- ew_halfsegment_cumh_p(h1 = 1, h2 = 0, sd = 0.0125, U = 0.25)
+#' @examples
+#'   x <- ew_halfsegment_cumh_p(h1 = 1, h2 = 0, sd = 0.0125, U = 0.25)
 ew_halfsegment_cumh_p <- function(h1, h2, sd, U) {
   stopifnot(length(h1) == 1)
   stopifnot(is.numeric(h1))

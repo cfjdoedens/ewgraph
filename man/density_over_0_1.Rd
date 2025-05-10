@@ -16,9 +16,6 @@ the elements of the input vector.}
 A vector of size \code{S}. Each element i of the vector contains
 the count of the values from \code{values_from_01} that have a value in the
 range (1/S - 1/2S, 1/S + 1/2S].
-examples
-y <- seq(0, 1, length.out=33)
-x <- density_over_0_1(values_from_0_1 = y, S = 12)
 }
 \description{
 Returns a vector of counts of the input.
@@ -27,4 +24,8 @@ The count is per i in 1:S,  where the elements of the input in
 }
 \details{
 The values equal 0 are counted in the first bucket.
+}
+\examples{
+    y <- seq(0, 1, length.out=33)
+    x <- density_over_0_1(values_from_0_1 = y, S = 12)
 }

@@ -23,13 +23,13 @@ trapezium.}
 \value{
 The computed value of x, which is the point where the imaginary line
 crosses the base line.
-
-Examples
-x <- ew_halfsegment_cumh_p(h1 = 1, h2 = 0, sd = 0.0125, U = 0.25)
 }
 \description{
 An ew half segment of an equal width graph, or ewgraph,
 is a rectangular trapezium with
 baseline size U and two parallel sides perpendicular
 to the base line.
+}
+\examples{
+  x <- ew_halfsegment_cumh_p(h1 = 1, h2 = 0, sd = 0.0125, U = 0.25)
 }
