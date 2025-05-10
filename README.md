@@ -105,7 +105,7 @@ $h_i * (1/S)$. See drawing below of segment i
 #   i/S - 2U       i/S - U          i/S
 ```
 
-$$surface_i = length\_of\_segment * height\_of\_segment$$
+$$surface_i = length.of.segment * height.of.segment$$
 $$          = (p_i + U - (p_i - U))) * h_i$$ $$= 2U * h_i$$
 $$= (1/S) * h_i$$
 
@@ -129,10 +129,10 @@ segment $i$ as the sum of its left and right parts.
 # i/S - 2U        i/S - U            i/S
 ```
 
-$$surface_i = surface\_left_i + surface\_right_i$$
-$$surface\_left_i  = length\_of\_left\_halve\_of\_segment_i *
+$$surface_i = surface.left_i + surface.right_i$$
+$$surface.left_i  = length.of.left.halve.of.segment_i *
                    (hleft_i + h_i) / 2$$ $$= U*(hleft_i + h_i) / 2$$
-$$surface\_right_i = length\_of\_right\_halve\_of\_segment_i *
+$$surface.right_i = length.of.right.halve.of.segment_i *
                   (h_i + hright_i) / 2$$ $$= U*(h_i + hright_i) / 2$$
 $$surface_i = U*(hleft_i + h_i) / 2 + U*(h_i + hright_i) / 2$$
 $$= (hleft_i + hright_i + 2 * h_i) * U / 2$$
