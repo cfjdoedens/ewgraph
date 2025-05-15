@@ -8,6 +8,14 @@
 \description{
 Chance graphs are represented as tibbles, based on an even spaced base line on (0, 1).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/cfjdoedens/ewgraph}
+  \item Report bugs at \url{https://github.com/cfjdoedens/ewgraph/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Crist-Jan Doedens \email{cfjdoedens@chance-matters.nl}
 

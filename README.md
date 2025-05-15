@@ -75,10 +75,10 @@ pairs $(p_i, h_i)$, $i$ in $1:S$. $S$ a positive integer. $p_i$ are
 elements of P, so of \[0, 1\]. $h_i$ are elements of H, so of \[0,
 inf\]. $$h_i = c(p_i)$$
 
-Let $$U = 1/(2*S)$$ We define the ith segment of $P$ as
-$[i/S - 1/S, i/S]$. So all segments have equal width, $1/S = 2*U$. And
-there are $S$ segments. The middle of the ith segment being
-$$p_i = i/(S - U)$$ So the segments are:
+Let $$U = 1 / (2 * S)$$. We define the ith segment of $P$ as
+$[i / S - 1 / S, i / S]$. So all segments have equal width,
+$1 / S = 2 * U$. And there are $S$ segments. The middle of the ith
+segment being $$p_i = i /(S - U)$$ So the segments are:
 $$[0, 1/S], [1/S, 2/S], ..., [(S - 1)/S, 1]$$
 
 ### The surface of a segment
@@ -167,7 +167,7 @@ In the same vein we get $$hright_i = (h_i + h_{ip1}) / 2$$
 
 This leaves us with the problem how to interpolate the leftmost
 $hleft_i$, so $hleft_1$, and the rightmost $hright_i$, so $hright_S$.
-This because, we can not interpolate with hi from segment 0 or from
+This because, we can not interpolate with h_i from segment 0 or from
 segment $S+1$, as these segments do not exist. For those cases instead
 of interpolating we extrapolate.
 
