@@ -1,15 +1,34 @@
-#' Partition \[0,1\] into S equally sized consecutive segments
+#' Partition line piece on the real line into equally sized consecutive segments
 #'
 #' Each segment is represented by its midpoint.
 #'
-#' @param S An integer >= 1. The number of segments to partition \[0,1\] into.
-#' @returns The vector of segment midpoints,
-#'          c(\code{(1-0.5)/S}, \code{(2-0.5)/S}, ... \code{(S-0.5)/S}).
+#' @param begin The start of the line piece.
+#' @param end The end of the line piece.
+#' @param S An integer >= 1. The number of segments to partition into.
+#' @returns The vector of segment midpoints.
+#' @export
+#' @examples
+#'   # Returns the vector c(0.1, 0.3, 0.5, 0.7, 0.9).
+#'   partition(S = 5)
+partition <- function(begin = 0, end = 1, S = 1000) {
+  stopifnot(begin < end)
+  stopifnot(posint(S))
+  range <- end - begin
+  seq(begin + range / (2 * S), 1 - range / (2 * S), range / S)
+}
+
+#' Partition \code{[0, 1]} into equally sized consecutive segments
+#'
+#' Each segment is represented by its midpoint.
+#'
+#' @param S An integer >= 1. The number of segments to partition into.
+#' @returns The vector of segment midpoints.
 #' @export
 #' @examples
 #'   # Returns the vector c(0.1, 0.3, 0.5, 0.7, 0.9).
 #'   partition_0_1(S = 5)
 partition_0_1 <- function(S = 1000) {
+  stopifnot(posint(S))
   seq(0 + 1 / (2 * S), 1 - 1 / (2 * S), 1 / S)
 }
 
