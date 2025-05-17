@@ -13,8 +13,13 @@
 partition <- function(begin = 0, end = 1, S = 1000) {
   stopifnot(begin < end)
   stopifnot(posint(S))
+  r <- numeric(S)
   range <- end - begin
-  seq(begin + range / (2 * S), 1 - range / (2 * S), range / S)
+  step <- range/S
+  for (i in 1:S) {
+    r[[i]] <- step/2 + (i-1)*step
+  }
+  r
 }
 
 #' Partition \code{[0, 1]} into equally sized consecutive segments

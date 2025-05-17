@@ -10,6 +10,7 @@ test_that("tests for unity()", {
 test_that("tests for partition()", {
   expect_equal(partition(S = 1), c(0.5))
   expect_equal(partition(S = 5), c(0.1, 0.3, 0.5, 0.7, 0.9))
+  expect_equal(partition(begin = 0, end = 0.2, S = 5), c(0.02, 0.06, 0.10, 0.14, 0.18))
 })
 
 test_that("tests for partition_0_1()", {
