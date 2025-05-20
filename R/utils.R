@@ -17,7 +17,7 @@ partition <- function(begin = 0, end = 1, S = 1000) {
   range <- end - begin
   step <- range/S
   for (i in 1:S) {
-    r[[i]] <- step/2 + (i-1)*step
+    r[[i]] <- begin + step/2 + (i-1)*step
   }
   r
 }
