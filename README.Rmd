@@ -4,12 +4,38 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include=FALSE}
+# README.Rmd is processed by the developer of the package 
+# to create a README.md or README.html for the user of the package.
+# The README should be processed as last step in the development process.
+# This means that we should load here the latest version of the package.
+# So that is what we will do below.
+# 
+# Also when we are developing the package and 
+# in parallel writing the README, we want to use for the
+# README the latest version of the package.
+# 
+# Load the latest version of the package that is under development.
+if (requireNamespace("devtools", quietly = TRUE) && # 
+    file.exists("ewgraph.Rproj")) {
+  devtools::load_all(".")
+} else {
+  # Error! Break off knitting process.
+  stopifnot(FALSE)
+}
+
+# Set global knitr options for all subsequent chunks
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100^"
+  out.width = "100%",
+  
+  # Route messages, warnings and errors to the R console, i.e. the developer.
+  # Not to the resulting document, i.e. the reader.
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE
 )
 ```
 
@@ -28,19 +54,14 @@ possibly use this knowledge in unforeseen ways.
 
 ## Installation
 
-You can install the development version of ewgraph like so:
+You can install the development version of ewgraph from
+[GitHub](https://github.com/) with:
 
-```{r install, message=TRUE, warning=TRUE, echo=TRUE}
-if (file.exists("/home/crist-jan/R/x86_64-pc-linux-gnu-library/4.5/ewgraph")) {
-  # We are executing on the author machine, use the development version available there. 
-  loadNamespace("ewgraph")
-} else {
-  # Use the github version.
-  if (!requireNamespace("pak", quietly = TRUE)) {
-    install.packages("pak")
+```{r install, eval = FALSE, echo=TRUE}
+  if (!requireNamespace("devtools", quietly = TRUE)) {
+    install.packages("devtools")
   }
-  pak::pak("cfjdoedens/ewgraph")
-}
+  devtools::install_github("cfjdoedens/ewgraph")
 ```
 
 ## Example

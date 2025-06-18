@@ -18,20 +18,14 @@ possibly use this knowledge in unforeseen ways.
 
 ## Installation
 
-You can install the development version of ewgraph like so:
+You can install the development version of ewgraph from
+[GitHub](https://github.com/) with:
 
 ``` r
-if (file.exists("/home/crist-jan/R/x86_64-pc-linux-gnu-library/4.5/ewgraph")) {
-  # We are executing on the author machine, use the development version available there. 
-  loadNamespace("ewgraph")
-} else {
-  # Use the github version.
-  if (!requireNamespace("pak", quietly = TRUE)) {
-    install.packages("pak")
+  if (!requireNamespace("devtools", quietly = TRUE)) {
+    install.packages("devtools")
   }
-  pak::pak("cfjdoedens/ewgraph")
-}
-#> <environment: namespace:ewgraph>
+  devtools::install_github("cfjdoedens/ewgraph")
 ```
 
 ## Example
