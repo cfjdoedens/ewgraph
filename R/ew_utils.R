@@ -371,6 +371,7 @@ posint <- function(i) {
 #'   should_be_true <- is_monotone_rising(f_linear_large,
 #'                                        range = c(-1e6, 1e6),
 #'                                        n_points = 1000)
+
 is_monotone_rising <- function(f,
                                range = c(0, 1),
                                n_points = 1e3,
