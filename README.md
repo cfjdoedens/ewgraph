@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/cfjdoedens/ewgraph/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cfjdoedens/ewgraph/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/cfjdoedens/ewgraph/graph/badge.svg)](https://app.codecov.io/gh/cfjdoedens/ewgraph)
 <!-- badges: end -->
 
 The goal of ewgraph is to represent and manipulate chance graphs as a
@@ -69,7 +72,7 @@ pairs $(p_i, h_i)$, $i$ in $1:S$. $S$ a positive integer. $p_i$ are
 elements of P, so of \[0, 1\]. $h_i$ are elements of H, so of \[0,
 inf\]. $$h_i = c(p_i)$$
 
-Let $$U = 1 / (2 * S)$$. We define the ith segment of $P$ as
+Let $$U = 1 / (2 * S)$$ We define the ith segment of $P$ as
 $[i / S - 1 / S, i / S]$. So all segments have equal width,
 $1 / S = 2 * U$. And there are $S$ segments. The middle of the ith
 segment being $$p_i = i /(S - U)$$ So the segments are:

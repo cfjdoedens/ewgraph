@@ -64,8 +64,7 @@ ew_high_density_interval <- function(g, high_density_area = .999) {
         last_seg <- last_seg - 1
         take_first <- TRUE
       } else {
-        # We should never come here.
-        stopifnot(FALSE)
+        stop("ew_high_density_interval: we should never come here.")
       }
     }
     r <- c(left = first_seg, right = last_seg)
@@ -89,4 +88,9 @@ ew_high_density_interval <- function(g, high_density_area = .999) {
   # 3. We do binary search to find the start of hdi_left,
   #    and also another binary search to find the end of hdi_right.
   #    This gives us the first and last segment of the HDI.
+  #
+  # This solution will work better when the granularity
+  # is not too small.
+  # So I propose to use it for S > 1000 and for S <= 1000 we
+  # can use the code above (line 29 till 73).
 }

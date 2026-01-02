@@ -1,3 +1,5 @@
+# Utility functions for equal width graphs
+
 #' Partition line piece on the real line into equally sized consecutive segments
 #'
 #' Each segment is represented by its midpoint.
@@ -10,14 +12,16 @@
 #' @examples
 #'   # Returns the vector c(0.1, 0.3, 0.5, 0.7, 0.9).
 #'   partition(S = 5)
-partition <- function(begin = 0, end = 1, S = 1000) {
+partition <- function(begin = 0,
+                      end = 1,
+                      S = 1000) {
   stopifnot(begin < end)
   stopifnot(posint(S))
   r <- numeric(S)
   range <- end - begin
-  step <- range/S
+  step <- range / S
   for (i in 1:S) {
-    r[[i]] <- begin + step/2 + (i-1)*step
+    r[[i]] <- begin + step / 2 + (i - 1) * step
   }
   r
 }
@@ -347,6 +351,165 @@ nonnegint <- function(i) {
 
 posint <- function(i) {
   nonnegint(i) && all(i > 0)
+}
+
+#' Checks if a function is monotone rising over a specified interval.
+#'
+#' @param f The function to test. It should be a function that takes a numeric
+#'   vector and returns a numeric vector.
+#' @param range A numeric vector of length 2, defining the start and end of the
+#'   interval to check (e.g., c(0, 100)).
+#' @param n_points The number of points to sample within the range. The more
+#'   points, the more thorough the check.
+#' @param strictly A boolean. If TRUE, checks for strictly increasing (f(x2) > f(x1)).
+#'   If FALSE (default), checks for non-decreasing (f(x2) >= f(x1)).
+#' @return TRUE if the function is monotone rising on the sampled points, FALSE otherwise.
+#' @export
+#'
+#' @examples
+#'   f_linear_large <- function(x) 2 * x + 5
+#'   should_be_true <- is_monotone_rising(f_linear_large,
+#'                                        range = c(-1e6, 1e6),
+#'                                        n_points = 1000)
+is_monotone_rising <- function(f,
+                               range = c(0, 1),
+                               n_points = 1e3,
+                               strictly = FALSE) {
+  # 1. Generate a sequence of ordered input values
+  x <- seq(from = range[[1]],
+           to = range[[2]],
+           length.out = n_points)
+
+  # 2. Compute the function's output, handling errors for individual points
+  y <- double(n_points)
+  for (i in seq_along(x)) {
+    result_i <- tryCatch(
+      f(x[[i]]),
+      error = function(e) {
+        warning(
+          sprintf(
+            "The function 'f' produced a fatal error for input %f: %s",
+            x[[i]],
+            conditionMessage(e)
+          )
+        )
+        return(NA_real_)
+      }
+    )
+
+    # Validate the result of each call, now explicitly checking for NaN
+    if (!is.numeric(result_i) ||
+        length(result_i) != 1 || is.nan(result_i)) {
+      # Suppress warnings for non-numeric/scalar, as they're now
+      # handled explicitly
+      if (!any(is.nan(result_i))) {
+        warning(
+          sprintf(
+            "The function 'f' returned a non-numeric or non-scalar
+             value for input %s.",
+            paste(x[[i]])
+          )
+        )
+      }
+      y[[i]] <- NA_real_
+    } else {
+      y[[i]] <- result_i
+    }
+  }
+
+  # NEW: If all points resulted in NA, the function is not monotone.
+  if (all(is.na(y))) {
+    return(FALSE)
+  }
+
+  # 3. Calculate the differences between consecutive output values
+  dy <- diff(y)
+
+  # 4. Check if all differences meet the condition, ignoring NA values
+  if (strictly) {
+    all(dy > 0, na.rm = TRUE)
+  } else {
+    all(dy >= 0, na.rm = TRUE)
+  }
+}
+
+#' Find input and output pairs of a function that are not monotone rising.
+#'
+#' Gather pairs of input and output in a would be monotone rising
+#' function where the function is not monotone rising.
+#' This function is useful for debugging purposes.
+#' Show the pairs of monotone rising inputs, with their non rising outputs.
+#'
+#' @param f The function to test. It should be a function that takes a numeric
+#'   vector and returns a numeric vector.
+#' @param in_vals Vector of numeric input values for f.
+#' @param strictly A boolean. If TRUE, checks for strictly
+#'   increasing (f(x2) > f(x1)).
+#'   If FALSE (default), checks for non-decreasing (f(x2) >= f(x1)).
+#' @returns A data frame with columns `input1`, `output1`, `input2`, `output2`
+#'   containing the offending pairs of input and their outputs.
+#' @export
+#' @examples
+#' # Example function that is not monotone rising
+#' example_function <- function(x) {
+#'   ifelse(x < 0.5, x, 1 - x)
+#' }
+#'
+#' # Find non-monotone pairs in the example function.
+#' x <- find_non_monotone_pairs(example_function, seq(
+#'   from = 0,
+#'   to = 1,
+#'   length.out = 100), strictly = FALSE)
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr %>%
+find_non_monotone_pairs <- function(f, in_vals, strictly = FALSE) {
+  # Check that in_vals is strictly monotone rising!
+  stopifnot(!is.unsorted(in_vals, strictly = TRUE))
+
+  # Compute the function's output.
+  y <- double(length(in_vals))
+  for (i in seq_along(in_vals)) {
+    y[[i]] <- f(in_vals[[i]])
+  }
+
+  # Calculate the differences between consecutive output values
+  dy <- diff(y)
+
+  # Find pairs where the monotonicity condition is violated
+  if (strictly) {
+    indices <- which(dy <= 0)
+  } else {
+    indices <- which(dy < 0)
+  }
+
+  if (length(indices) == 0) {
+    r <-
+      data.frame(
+        input1 = numeric(0),
+        output1 = numeric(0),
+        input2 = numeric(0),
+        output2 = numeric(0),
+        violation_size = numeric(0)
+      )
+    r <- tibble::as_tibble(r)
+    return(r)
+  }
+
+  # Create a data frame with the offending pairs
+  r <- data.frame(
+    input1 = in_vals[indices],
+    output1 = y[indices],
+    input2 = in_vals[indices + 1],
+    output2 = y[indices + 1]
+  )
+
+  # Add to r the difference in output as column.
+  r$violation_size <- r$output1 - r$output2
+
+  # Sort on violation_size, descending.
+  r <- r[order(-r$violation_size), ]
+
+  r <- tibble::as_tibble(r)
 }
 
 # This supresses the message from devtools::check().

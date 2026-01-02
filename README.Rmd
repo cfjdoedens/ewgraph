@@ -16,12 +16,12 @@ output: github_document
 # README the latest version of the package.
 # 
 # Load the latest version of the package that is under development.
-if (requireNamespace("devtools", quietly = TRUE) && # 
+if (requireNamespace("devtools", quietly = TRUE) && 
     file.exists("ewgraph.Rproj")) {
   devtools::load_all(".")
 } else {
   # Error! Break off knitting process.
-  stopifnot(FALSE)
+    stop("README ewgraph: no ewgraph.Rproj in current directory.")
 }
 
 # Set global knitr options for all subsequent chunks
@@ -42,6 +42,8 @@ knitr::opts_chunk$set(
 # ewgraph
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/cfjdoedens/ewgraph/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cfjdoedens/ewgraph/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/cfjdoedens/ewgraph/graph/badge.svg)](https://app.codecov.io/gh/cfjdoedens/ewgraph)
 <!-- badges: end -->
 
 The goal of ewgraph is to represent and manipulate chance graphs as a
@@ -104,7 +106,7 @@ $h_i$ are elements of H, so of [0, inf].
 $$h_i = c(p_i)$$
 
 Let 
-$$U = 1 / (2 * S)$$.
+$$U = 1 / (2 * S)$$
 We define the ith segment of $P$ as $[i / S - 1 / S, i / S]$.
 So all segments have equal width, $1 / S = 2 * U$.
 And there are $S$ segments.

@@ -27,7 +27,7 @@ test_that("Case S == 2. Equal chances.", {
 })
 
 test_that("Case S == 2. Unequal chances.
-          Chance graph is the straight line y = x, i.e. h = p.",
+          Chance graph is the straight line y = 2*x, i.e. h = 2*p.",
           {
             v <- c(0.25, 0.75)
 
@@ -43,7 +43,7 @@ test_that("Case S == 2. Unequal chances.
           })
 
 test_that("Case S == 2. Unequal chances.
-          Chance graph is the straight line y = 1 - x, i.e. h = 1 - p.",
+          Chance graph is the straight line y = 2 - x, i.e. h = 2 - 2*p.",
                       {
                         v <- c(0.75, 0.25)
 
