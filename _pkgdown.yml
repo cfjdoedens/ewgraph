@@ -1,5 +1,4 @@
-url: https://cfjdoedens.github.io/ewgraph/ # Your future URL
+url: https://cfjdoedens.github.io/ewgraph/
 template:
   bootstrap: 5
-  bootswatch: flatly
-
+document

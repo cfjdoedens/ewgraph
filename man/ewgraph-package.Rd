@@ -12,6 +12,7 @@ Chance graphs are represented as tibbles, based on an even spaced base line on (
 Useful links:
 \itemize{
   \item \url{https://github.com/cfjdoedens/ewgraph}
+  \item \url{https://cfjdoedens.github.io/ewgraph/}
   \item Report bugs at \url{https://github.com/cfjdoedens/ewgraph/issues}
 }
 

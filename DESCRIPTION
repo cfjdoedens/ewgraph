@@ -18,5 +18,5 @@ Suggests:
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-URL: https://github.com/cfjdoedens/ewgraph
+URL: https://github.com/cfjdoedens/ewgraph, https://cfjdoedens.github.io/ewgraph/
 BugReports: https://github.com/cfjdoedens/ewgraph/issues
